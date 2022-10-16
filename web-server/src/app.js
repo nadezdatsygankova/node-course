@@ -42,28 +42,41 @@ app.get('/about', (req, res) => {
     name: 'Nadia Tsygankova'
   })
 })
-// app.get('/weather', (req, res) => {
-//   res.send({
-//     forecast: 'It is snowing',
-//     location: 'Philadelphia'
-//   })
-// })
-app.get('/help/*', (req, res) =>{
+app.get('/weather', (req, res) => {
+  res.send({
+    products: 'It is snowing',
+    location: 'Philadelphia'
+  })
+})
+
+app.get('/products', (req, res) => {
+  if (!req.query.search) {
+    return res.send({
+      error: 'You must provide a search term'
+    })
+  }
+  
+  console.log(req.query.search)
+  res.send({
+    forecast: [],
+  })
+})
+app.get('/help/*', (req, res) => {
   res.render('404', {
     title: '404',
     name: 'Nadia Tsygankova',
     errorMessage: 'Help article not found.'
-    })
+  })
 })
 
 
 //for all others
-app.get('*', (req,res)=>{
+app.get('*', (req, res) => {
   res.render('404', {
     title: '404',
     name: 'Nadia Tsygankova',
     errorMessage: 'Page not found.'
-    })
+  })
 })
 app.listen(3000, () => {
   console.log('server is up on port 3000')
