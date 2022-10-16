@@ -54,10 +54,14 @@ forecast(req.query.address, (error, {body}={}) =>{
   if(error){
     return res.send({error})
   }
+  console.log(body)
    res.send({
     address: req.query.address,
     temperature: body.current.temperature,
-    location: body.location.name
+    location: body.location.name,
+    feelslike: body.current.feelslike,
+    weather_icons: body.current.weather_icons,
+    weather_descriptions: body.current.weather_descriptions
   })
 })
 })
