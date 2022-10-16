@@ -1,42 +1,38 @@
 //CRUD
-
-const { MongoClient, ObjectID } = require('mongodb')
-// const id = new ObjectID();//new id
-// console.log(id.id.length);
-// console.log(id.getTimestamp());
-
 const connectionURL = 'mongodb://127.0.0.1:27017';
 const databaseName = 'task-manager';
+
+const { MongoClient, ObjectID } = require('mongodb')
+
+
+
+
 
 MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) => {
   if (error) {
     return console.log('Unable to connect to database!')
   }
-  const db = client.db(databaseName)
-  // Start to interact with the database
-  // db.collection('users').insertOne({
-  //   _id:id,
-  //   name: 'Vic',
-  //   age: 27
-  // }, (error, result) => {
-  //   if (error) {
-  //     return console.log('Unable to insert user!')
-  //   }
-  //   console.log(result)
-  // })
+  const db = client.db(databaseName);
+  db.collection('users').findOne({ _id: new ObjectID("634ba4453eb197d47f33cf06") }, (error, task) => {
+    if (error) {
+      return console.log('Unable to fetch')
+    }
+    console.log(task)
+  })
 
-  // db.collection('tasks').insertMany([
-  //   {
-  //     description: 'Clean the house',
-  //     completed: true
-  //   }, {
-  //     description: 'Renew inspection',
-  //     completed: false
-  //   }
-  // ], (error, result) => {
-  //   if (error) {
-  //     return console.log('Unable to insert tasks!')
-  //   }
-  //   console.log(result)
-  // })
+
+  db.collection('tasks').find({ completed: false }).toArray((error, tasks) => {
+    console.log(tasks)
+  })
+
+  db.collection('tasks').find({ completed: false }).count((error, count) => {
+    console.log(count)
+  })
+
+
+  //   db.collection('tasks').findOne({ _id: new
+  //     ObjectID("5c0fec243ef6bdfbe1d62e2f") }, (error, task) => {
+  //     console.log(task)
+  //     })
+
 })
