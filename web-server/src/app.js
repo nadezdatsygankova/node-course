@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const hbs = require('hbs');//for partials
+const forecast = require('./utils/forecast');
 
 // console.log(__dirname); //src
 // console.log(__filename); //src/app.js
@@ -48,11 +49,17 @@ if(!req.query.address){
     error: 'You must provide a weather term'
   })
 }
-  res.send({
+
+forecast(req.query.address, (error, {body}) =>{
+  if(error){
+    return res.send({error})
+  }
+   res.send({
     address: req.query.address,
-    products: 'It is snowing',
-    location: 'Philadelphia'
+    temperature: body.current.temperature,
+    location: body.location.name
   })
+})
 })
 
 app.get('/products', (req, res) => {
