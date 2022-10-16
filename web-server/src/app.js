@@ -48,7 +48,23 @@ app.get('/about', (req, res) => {
 //     location: 'Philadelphia'
 //   })
 // })
+app.get('/help/*', (req, res) =>{
+  res.render('404', {
+    title: '404',
+    name: 'Nadia Tsygankova',
+    errorMessage: 'Help article not found.'
+    })
+})
 
+
+//for all others
+app.get('*', (req,res)=>{
+  res.render('404', {
+    title: '404',
+    name: 'Nadia Tsygankova',
+    errorMessage: 'Page not found.'
+    })
+})
 app.listen(3000, () => {
   console.log('server is up on port 3000')
 })
