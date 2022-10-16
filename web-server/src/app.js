@@ -50,7 +50,7 @@ if(!req.query.address){
   })
 }
 
-forecast(req.query.address, (error, {body}) =>{
+forecast(req.query.address, (error, {body}={}) =>{
   if(error){
     return res.send({error})
   }
