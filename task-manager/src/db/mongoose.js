@@ -47,41 +47,44 @@ const User = mongoose.model('User', {
   }
 })
 
-//create an instance
-const me = new User({
-  name: '   Nadia',
-  email: 'MYdEE@gmail.com   ',
-  password: 'ssword'
-})
+// //create an instance
+// const me = new User({
+//   name: '   Nadia',
+//   email: 'MYdEE@gmail.com   ',
+//   password: 'phone@98!'
+// })
 
-//save it in db
-me.save().then(() => {
-  console.log(me)
-}).catch((error) => {
-  console.log("error", error)
-})
+// //save it in db
+// me.save().then(() => {
+//   console.log(me)
+// }).catch((error) => {
+//   console.log("error", error)
+// })
 
 
 const Task = mongoose.model('Task', {
   description: {
-    type: String
+    type: String,
+    required: true,
+    trim: true,
   },
   completed: {
-    type: Boolean
+    type: Boolean,
+    default: false,
   }
 });
 
-// const task = new Task(
-//   {
-//     description: 'Learn the Mongoose library',
-//     completed: false
-//   }
-// );
+const task = new Task(
+  {
+    description: 'Do Node.js',
+    completed: false
+  }
+);
 
-// task.save()
-// .then(()=>{
-//   console.log(task)
-// })
-// .catch((error)=>{
-//   console.log(error)
-// })
+task.save()
+.then(()=>{
+  console.log(task)
+})
+.catch((error)=>{
+  console.log(error)
+})
