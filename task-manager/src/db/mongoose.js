@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
 
 // create new db and connect it
 mongoose.connect('mongodb://127.0.0.1:27017/task-manage-api',
@@ -11,16 +12,46 @@ mongoose.connect('mongodb://127.0.0.1:27017/task-manage-api',
 const User = mongoose.model('User', {
   name: {
     type: String,
-    required: true
+    required: true,
+    trim: true
+  },
+  email: {
+    type: String,
+    require: true,
+    trim: true,
+    lowercase:true,
+    validate(value) {
+      if (!validator.isEmail(value)) {
+        throw new Error('Email is invalid')
+      }
+    }
   },
   age: {
-    type: Number
+    type: Number,
+    default: 0,
+    validate(value) {
+      if (value < 0) {
+        throw new Error('Age must be a positive number')
+      }
+    }
+  },
+  password: {
+    type: String,
+    trim: true,
+    minlength:7,
+    validate(value) {
+      if(value.toLowerCase().includes('password')){
+        throw new Error('Password cannot contain "password"')
+      }
+    }
   }
 })
 
-//create a instance
+//create an instance
 const me = new User({
-
+  name: '   Nadia',
+  email: 'MYdEE@gmail.com   ',
+  password: 'ssword'
 })
 
 //save it in db
